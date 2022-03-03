@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-03T09:04:34.750Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="ZHk6hWSXBHeyVXQkVxix" version="16.6.5" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-03T09:20:24.138Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="qlvNIFLiXu1uc53JGh6C" version="16.6.5" type="github">
   <diagram id="UxWPR8Q1dh1jyQt8T_NS" name="Page-1">
     <mxGraphModel dx="1182" dy="764" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -59,6 +59,9 @@
         </mxCell>
         <mxCell id="gLSforLf6Kqvrdox4JSZ-13" value="&lt;&lt;block&gt;&gt;&#xa;Programme" style="swimlane;startSize=50;" vertex="1" parent="1">
           <mxGeometry x="50" y="480" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="gLSforLf6Kqvrdox4JSZ-25" value="Diagramme de définition de blocks" style="swimlane;startSize=23;" vertex="1" parent="1">
+          <mxGeometry x="10" width="1180" height="610" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
