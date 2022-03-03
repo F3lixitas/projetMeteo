@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2022-03-03T09:14:19.741Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="cmKy0L_VPMOoP4k0V4cA" version="16.6.5" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-03T09:19:54.968Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="canbLmpzIqp-WRKx3044" version="16.6.5" type="github">
   <diagram id="yd7fFxd1aYqqF2T_Rk8k" name="Page-1">
     <mxGraphModel dx="1182" dy="764" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -92,6 +92,9 @@
         </mxCell>
         <mxCell id="zLWbSg0s4QKfMcLJN8sy-40" value="text=&quot;Prévision du jour suivant fiable.&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-38">
           <mxGeometry y="75" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-42" value="Diagramme d&#39;exigences" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="990" height="720" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
