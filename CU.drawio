@@ -1,12 +1,9 @@
-<mxfile host="app.diagrams.net" modified="2022-03-03T08:24:21.472Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="eIQJtNuNiypprWctBUky" version="16.6.5" type="github">
+<mxfile host="app.diagrams.net" modified="2022-03-03T09:19:26.950Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="hd_oq5FoO8DAvwdTSnO8" version="16.6.5" type="github">
   <diagram id="VCPiUlUgkRnU6FgvmjeM" name="Page-1">
     <mxGraphModel dx="1182" dy="764" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="EntMQD-L92ceGihrGhIw-2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="140" y="130" width="650" height="430" as="geometry" />
-        </mxCell>
         <mxCell id="EntMQD-L92ceGihrGhIw-1" value="utilisateur" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1">
           <mxGeometry x="190" y="290" width="27" height="60" as="geometry" />
         </mxCell>
@@ -15,12 +12,6 @@
         </mxCell>
         <mxCell id="EntMQD-L92ceGihrGhIw-5" value="Station météorologique domestique" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="330" y="190" width="250" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="EntMQD-L92ceGihrGhIw-6" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="140" y="130" width="650" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="EntMQD-L92ceGihrGhIw-8" value="Cas d&#39;utilisation de la station météorologique&amp;nbsp;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="140" y="135" width="640" height="30" as="geometry" />
         </mxCell>
         <mxCell id="EntMQD-L92ceGihrGhIw-15" value="&quot;include&quot;" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;dashed=1;" edge="1" parent="1" source="EntMQD-L92ceGihrGhIw-9" target="EntMQD-L92ceGihrGhIw-10">
           <mxGeometry relative="1" as="geometry" />
@@ -51,6 +42,9 @@
         </mxCell>
         <mxCell id="EntMQD-L92ceGihrGhIw-20" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;endArrow=none;endFill=0;" edge="1" parent="1" source="EntMQD-L92ceGihrGhIw-1" target="EntMQD-L92ceGihrGhIw-9">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EntMQD-L92ceGihrGhIw-21" value="Cas d&#39;utilisation de la station météorologique domestique" style="swimlane;" vertex="1" parent="1">
+          <mxGeometry x="160" y="140" width="630" height="430" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
