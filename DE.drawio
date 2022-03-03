@@ -1,1 +1,99 @@
-<mxfile host="app.diagrams.net" modified="2022-03-03T08:25:57.085Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" version="16.6.5" etag="GBk3oT0mjWYV_nNh3TB8" type="github"><diagram id="yd7fFxd1aYqqF2T_Rk8k">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2022-03-03T08:54:28.600Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36" etag="laA9TjxBOg2uC075r9gD" version="16.6.5" type="github">
+  <diagram id="yd7fFxd1aYqqF2T_Rk8k" name="Page-1">
+    <mxGraphModel dx="1182" dy="764" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-15" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;endArrow=circlePlus;endFill=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="zLWbSg0s4QKfMcLJN8sy-1" target="zLWbSg0s4QKfMcLJN8sy-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="310" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-18" value="&quot;refine&quot;" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;endArrow=classic;endFill=1;dashed=1;" edge="1" parent="1" source="zLWbSg0s4QKfMcLJN8sy-1" target="zLWbSg0s4QKfMcLJN8sy-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-1" value="&lt;&lt;requirement&gt;&gt;&#xa;Mesurer l&#39;humidité" style="swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="480" y="330" width="200" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-24" value="id : &quot;11&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-1">
+          <mxGeometry y="50" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-16" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=circlePlus;endFill=0;" edge="1" parent="1" source="zLWbSg0s4QKfMcLJN8sy-2" target="zLWbSg0s4QKfMcLJN8sy-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-19" value="&quot;refine&quot;" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="1" source="zLWbSg0s4QKfMcLJN8sy-2" target="zLWbSg0s4QKfMcLJN8sy-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-2" value="&lt;&lt;requirement&gt;&gt;&#xa;Mesurer la pression" style="swimlane;startSize=45;" vertex="1" parent="1">
+          <mxGeometry x="470" y="505" width="220" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-25" value="id : &quot;12&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-2">
+          <mxGeometry y="55" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-35" value="text=&quot;Précision de la mesure à 1hPa.&quot;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-2">
+          <mxGeometry y="85" width="220" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-17" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;endArrow=circlePlus;endFill=0;" edge="1" parent="1" source="zLWbSg0s4QKfMcLJN8sy-3" target="zLWbSg0s4QKfMcLJN8sy-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-20" value="&quot;refine&quot;" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="1" source="zLWbSg0s4QKfMcLJN8sy-3" target="zLWbSg0s4QKfMcLJN8sy-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-3" value="&lt;&lt;requirement&gt;&gt;&#xa;Mesurer la température" style="swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="470" y="680" width="220" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-26" value="id : &quot;13&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-3">
+          <mxGeometry y="50" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-36" value="text=&quot;Précision de la mesure à 1°C.&quot;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-3">
+          <mxGeometry x="5" y="80" width="210" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-21" value="&quot;satisfy&quot;" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="1" source="zLWbSg0s4QKfMcLJN8sy-4" target="zLWbSg0s4QKfMcLJN8sy-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-4" value="&lt;&lt;requirement&gt;&gt;&#xa;Afficher la météo" style="swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="100" y="510" width="256" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-9" value="id : &quot;1&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-4">
+          <mxGeometry x="1" y="50" width="50" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-30" value="text=&quot;La station doit afficher la météo à &lt;br&gt;l&#39;utilisateur.&quot;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-4">
+          <mxGeometry x="6" y="85" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-22" value="&quot;deriveReqt&quot;" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="1" source="zLWbSg0s4QKfMcLJN8sy-12" target="zLWbSg0s4QKfMcLJN8sy-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-12" value="&lt;&lt;requirement&gt;&gt;&#xa;Obtenir une prévision météo" style="swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="356" y="150" width="220" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-28" value="id : &quot;2&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-12">
+          <mxGeometry x="-5" y="50" width="50" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-32" value="text=&quot;On doit pouvoir prévoir la météo&lt;br&gt;&lt;div style=&quot;text-align: left&quot;&gt;&lt;span&gt;à venir à partir de la météo actuelle&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-12">
+          <mxGeometry y="70" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-13" value="&lt;&lt;requirement&gt;&gt;&#xa;Résistance climatique" style="swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="50" y="150" width="210" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-29" value="id : &quot;0&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-13">
+          <mxGeometry y="50" width="50" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-33" value="text=&quot;La station météo doit être&lt;br&gt;résistante aux conditions climatiques &lt;br&gt;(humidité, température).&quot;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-13">
+          <mxGeometry y="80" width="210" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-14" value="&lt;&lt;requirement&gt;&gt;&#xa;Traiter en temps réel" style="swimlane;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="780" y="510" width="225" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-37" value="text=&quot;Rafraichissement de l&#39;ordre d&#39;une &lt;br&gt;minute.&quot;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="zLWbSg0s4QKfMcLJN8sy-14">
+          <mxGeometry x="5" y="75" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-27" value="id : &quot;1123&quot;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="785" y="560" width="70" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="zLWbSg0s4QKfMcLJN8sy-34" value="text=&quot;Précision de la mesure à 5%.&quot;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="485" y="410" width="210" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
