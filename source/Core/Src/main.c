@@ -29,12 +29,21 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+typedef enum DataRate{
+	DATA_RATE_ONE_SHOT = 0b00000000,
+	DATA_RATE_1Hz = 0b00010000,
+	DATA_RATE_7Hz = 0b00100000,
+	DATA_RATE_12_5Hz = 0b00110000,
+	DATA_RATE_25Hz = 0b01000000
+}DataRate;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define PRESSURE_SENSOR_ADDR 0b1011101 << 1
+#define PRESSURE_SENSOR_ADDR 0b10111010
+#define HUMIDITY_TEMPERATURE_SENSOR_ADDR 0b10111110
+
+#define PRESSURE_POWER_DOWN 0b10000000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -48,6 +57,12 @@
 uint16_t i=0;
 uint8_t ret;
 uint8_t data;
+uint8_t rawPressureData[3];
+int32_t pressureData;
+float pressure;
+uint8_t rawTemperatureData[2];
+int16_t temperatureData;
+float temperature;
 
 /* USER CODE END PV */
 
@@ -99,19 +114,11 @@ int main(void)
   MX_I2C1_Init();
 
   /* USER CODE BEGIN 2 */
-  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_14,GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
-  HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);
-  printf("test\r\n");
-  HAL_Delay(1000);
-  for( i=0; i < 256; i++)
-  {
-	  ret = HAL_I2C_IsDeviceReady(&hi2c1,i, 3,50);
-	  if(ret == HAL_OK)
-	  {
-		  printf("%d\n\r, ",i);
-	  }
-  }
+
+  data = (uint8_t)(DATA_RATE_1Hz | PRESSURE_POWER_DOWN);
+  HAL_I2C_Mem_Write(&hi2c1, PRESSURE_SENSOR_ADDR, 0x20, 1, &data, 1, 50);
+  data = 0;
+  HAL_I2C_Mem_Write(&hi2c1, PRESSURE_SENSOR_ADDR, 0x10, 1, &data, 1, 50);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,7 +128,26 @@ int main(void)
     /* USER CODE END WHILE */
 	  HAL_Delay(1000);
 
-	  ret = HAL_I2C_Mem_Read(&hi2c1, PRESSURE_SENSOR_ADDR,0x0F, 1, &data, 1, 50);
+	  HAL_I2C_Mem_Read(&hi2c1, PRESSURE_SENSOR_ADDR, 0x28, 1, &rawPressureData[0], 1, 50);
+	  HAL_I2C_Mem_Read(&hi2c1, PRESSURE_SENSOR_ADDR, 0x29, 1, &rawPressureData[1], 1, 50);
+	  HAL_I2C_Mem_Read(&hi2c1, PRESSURE_SENSOR_ADDR, 0x2A, 1, &rawPressureData[2], 1, 50);
+
+	  HAL_I2C_Mem_Read(&hi2c1, PRESSURE_SENSOR_ADDR, 0x2B, 1, &rawTemperatureData[0], 1, 50);
+	  HAL_I2C_Mem_Read(&hi2c1, PRESSURE_SENSOR_ADDR, 0x2C, 1, &rawTemperatureData[1], 1, 50);
+
+	  pressureData = rawPressureData[0];
+	  pressureData |= (rawPressureData[1] << 8);
+	  if(rawPressureData[2] & 0x80){
+		  pressureData |= (rawPressureData[2] << 16);
+		  pressureData |= (0xFF << 24);
+	  }else{
+		  pressureData |= (rawPressureData[2] << 16);
+	  }
+	  pressure = pressureData/4096.0;
+
+	  temperatureData = rawTemperatureData[0] + (rawTemperatureData[1] << 8);
+	  temperature = 42.5 + temperatureData/480.0;
+
 	  if(ret != HAL_OK){
 		  printf("[CONNECTION ERROR] Unable to get data");
 	  }
