@@ -29,13 +29,13 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef enum DataRate{
-	DATA_RATE_ONE_SHOT = 0b00000000,
-	DATA_RATE_1Hz = 0b00010000,
-	DATA_RATE_7Hz = 0b00100000,
-	DATA_RATE_12_5Hz = 0b00110000,
-	DATA_RATE_25Hz = 0b01000000
-}DataRate;
+typedef enum PressureDataRate{
+	PRESSURE_DATA_RATE_ONE_SHOT = 0b00000000,
+	PRESSURE_DATA_RATE_1Hz = 0b00010000,
+	PRESSURE_DATA_RATE_7Hz = 0b00100000,
+	PRESSURE_DATA_RATE_12_5Hz = 0b00110000,
+	PRESSURE_DATA_RATE_25Hz = 0b01000000
+}PressureDataRate;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -43,7 +43,7 @@ typedef enum DataRate{
 #define PRESSURE_SENSOR_ADDR 0b10111010
 #define HUMIDITY_TEMPERATURE_SENSOR_ADDR 0b10111110
 
-#define PRESSURE_POWER_DOWN 0b10000000
+#define POWER_DOWN 0b10000000
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -64,6 +64,30 @@ uint8_t rawTemperatureData[2];
 int16_t temperatureData;
 float temperature;
 
+uint8_t rawTemperatureData2[2];
+int16_t temperatureData2;
+float temperature2;
+
+uint8_t rawT0[2];
+uint8_t rawT1[2];
+uint8_t Tdeg[2];
+uint8_t t0t1MSB;
+float RealTdeg0;
+float RealTdeg1;
+int16_t T0;
+int16_t T1;
+
+uint8_t rawHumidityData[2];
+int16_t humidityData;
+float humidity;
+
+uint8_t rawH0[2];
+uint8_t rawH1[2];
+uint8_t Hdeg[2];
+int16_t H0;
+int16_t H1;
+float Halpha;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,6 +104,9 @@ int __io_putchar(int ch)
 	return ch;
 }
 
+float lerp(float a, float b, float alpha){
+	return (b - a) * alpha + a;
+}
 /* USER CODE END 0 */
 
 /**
@@ -115,10 +142,36 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 
-  data = (uint8_t)(DATA_RATE_1Hz | PRESSURE_POWER_DOWN);
+  data = (uint8_t)(PRESSURE_DATA_RATE_7Hz | POWER_DOWN);
   HAL_I2C_Mem_Write(&hi2c1, PRESSURE_SENSOR_ADDR, 0x20, 1, &data, 1, 50);
   data = 0;
   HAL_I2C_Mem_Write(&hi2c1, PRESSURE_SENSOR_ADDR, 0x10, 1, &data, 1, 50);
+
+  data = POWER_DOWN | 0b00000010;
+  HAL_I2C_Mem_Write(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x20, 1, &data, 1, 50);
+
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x3C, 1, &rawT0[0], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x3D, 1, &rawT0[1], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x3E, 1, &rawT1[0], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x3F, 1, &rawT1[1], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x32, 1, &Tdeg[0], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x33, 1, &Tdeg[1], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x35, 1, &t0t1MSB, 1, 50);
+
+  T0 = rawT0[0] + (rawT0[1] << 8);
+  T1 = rawT1[0] + (rawT1[1] << 8);
+
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x36, 1, &rawH0[0], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x37, 1, &rawH0[1], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x3A, 1, &rawH1[0], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x3B, 1, &rawH1[1], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x30, 1, &Hdeg[0], 1, 50);
+  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x31, 1, &Hdeg[1], 1, 50);
+
+  H0 = rawH0[0] + (rawH0[1] << 8);
+  H1 = rawH1[0] + (rawH1[1] << 8);
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -148,12 +201,21 @@ int main(void)
 	  temperatureData = rawTemperatureData[0] + (rawTemperatureData[1] << 8);
 	  temperature = 42.5 + temperatureData/480.0;
 
-	  if(ret != HAL_OK){
-		  printf("[CONNECTION ERROR] Unable to get data");
-	  }
-	  else{
-		  printf("%d\n\r", data);
-	  }
+
+	  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x2A, 1, &rawTemperatureData2[0], 1, 50);
+	  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x2B, 1, &rawTemperatureData2[1], 1, 50);
+
+	  temperatureData2 = rawTemperatureData2[0] + (rawTemperatureData2[1] << 8);
+	  RealTdeg0 = (((uint16_t)Tdeg[0] + (((uint16_t)t0t1MSB & 0b11) << 8)))/8.0;
+	  RealTdeg1 = (((uint16_t)Tdeg[1] + (((uint16_t)t0t1MSB & 0b1100) << 6)))/8.0;
+	  temperature2 = lerp(RealTdeg0, RealTdeg1, (float)(temperatureData2 - T0)/(T1-T0));
+
+	  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x28, 1, &rawHumidityData[0], 1, 50);
+	  HAL_I2C_Mem_Read(&hi2c1, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x29, 1, &rawHumidityData[1], 1, 50);
+
+	  humidityData = rawHumidityData[0] + (rawHumidityData[1] << 8);
+	  Halpha = (float)(humidityData - H0)/(H1-H0);
+	  humidity = lerp(Hdeg[0]/2.0, Hdeg[1]/2.0, Halpha);
 
     /* USER CODE BEGIN 3 */
   }
