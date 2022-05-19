@@ -1,0 +1,6 @@
+C:/Users/Travail/Documents/GitHub/projetMeteo/src/Src/httpserver-netconn.c:99:7:lerp	0	static
+C:/Users/Travail/Documents/GitHub/projetMeteo/src/Src/httpserver-netconn.c:108:6:setHI2C	0	static
+C:/Users/Travail/Documents/GitHub/projetMeteo/src/Src/httpserver-netconn.c:228:6:http_server_netconn_init	40	static
+C:/Users/Travail/Documents/GitHub/projetMeteo/src/Src/httpserver-netconn.c:268:5:findCharacter	0	static
+C:/Users/Travail/Documents/GitHub/projetMeteo/src/Src/httpserver-netconn.c:277:6:DynWebPage	1096	static
+C:/Users/Travail/Documents/GitHub/projetMeteo/src/Src/httpserver-netconn.c:188:13:http_server_netconn_thread	80	static
