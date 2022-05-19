@@ -274,6 +274,12 @@ int findCharacter(char* str, char c){
 	return -1;
 }
 
+const portCHAR header[] = "<!DOCTYPE HTML><head><meta http-equiv=\"refresh\" content=\"2\"><title>Station meteo</title></head><body><div class=\"Section1\" style=\"width: 100%; height: 100%\"><div style=\"margin-left: 30pt;\">"
+		  "<p class=\"MsoNormal\" style=\"text-align: center;\" align=\"center\"><b><i><span style=\"font-size: 36pt; font-family: "
+		  "Calibri; font-style: normal\"><strong>Station meteo domestique</strong></span></i></b><span style=\"font-size: 13.5pt;\">"
+		  "</span></p></div><div class=\"MsoNormal\" style=\"text-align: center;\" align=\"center\"><hr align=\"center\" size=\"3\" "
+		  "width=\"100%\"></div><div style=\"position:absolute; width: 100%;\">";
+
 void DynWebPage(struct netconn *conn)
 {
   //struct fs_file file;
@@ -302,8 +308,6 @@ void DynWebPage(struct netconn *conn)
   /* Send the dynamically generated page */
   //netconn_write(conn, PAGE_START, strlen((char*)PAGE_START), NETCONN_COPY);
   //<meta http-equiv=\"refresh\" content=\"2\">
-  strcat((char *)PAGE_BODY, "<!DOCTYPE HTML><head><meta http-equiv=\"refresh\" content=\"2\"><title>Station meteo</title></title></head>");
-  strcat((char *)PAGE_BODY, "<body><div style=\"position:absolute; width: 100%;\">");
 
   //HAL_Delay(1000);
 
@@ -349,22 +353,28 @@ void DynWebPage(struct netconn *conn)
   float t3 = 5.1;
 
   sprintf(valeur, "%.1f %s", temperature2, "deg C");
-  strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center;\"> Temperature : ");
+  strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center; font-size:30px;\"> Temperature : ");
   strcat((char *)PAGE_BODY, valeur);
   strcat((char *)PAGE_BODY, "</div>");
   sprintf(valeur, "%.1f %s", pressure, "Pa");
-  strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center;\"> Pression : ");
+  strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center; font-size:30px;\"> Pression : ");
   strcat((char *)PAGE_BODY, valeur);
   strcat((char *)PAGE_BODY, "</div>");
   sprintf(valeur, "%.1f %s", humidity, "%");
-  strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center;\"> Humidite : ");
+  strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center; font-size:30px;\"> Humidite : ");
   strcat((char *)PAGE_BODY, valeur);
   strcat((char *)PAGE_BODY, "</div>");
-
-  strcat((char *)PAGE_BODY, "<div>Prevision :");
   strcat((char *)PAGE_BODY, "</div>");
 
-  strcat((char *)PAGE_BODY, "</div></body></html>");
+  strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px\">Prevision :");
+  strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px; width 50%; float: left;position: relative;\">Il fait ");
+  strcat((char *)PAGE_BODY, "</div>");
+  strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px; width 50%; float: left;position: relative;\">Il va faire ");
+    strcat((char *)PAGE_BODY, "</div>");
+  strcat((char *)PAGE_BODY, "</div>");
+
+  strcat((char *)PAGE_BODY, "</body></html>");
+  netconn_write(conn, header, strlen(header), NETCONN_COPY);
   netconn_write(conn, PAGE_BODY, strlen(PAGE_BODY), NETCONN_COPY);
 
 }
