@@ -25,6 +25,7 @@
 #include "httpserver-netconn.h"
 #include "cmsis_os.h"
 
+//#include <time.h>
 
 #include <stdio.h>
 
@@ -55,17 +56,25 @@ typedef enum PressureDataRate{
 
 I2C_HandleTypeDef* hi2c;
 
+uint32_t tcnt = 0;
+
 uint8_t c=0;
 uint8_t status=0;
 int j=0;
+int k=0;
 char I2C_add[20];
 uint8_t I2CBuf[10];
+
+time_t start;
+time_t end;
 
 uint8_t ret;
 uint8_t data;
 uint8_t rawPressureData[3];
 int32_t pressureData;
 float pressure;
+float pressureValues[12];
+float pente = 0;
 uint8_t rawTemperatureData[2];
 int16_t temperatureData;
 float temperature;
@@ -107,6 +116,8 @@ float lerp(float a, float b, float alpha){
 
 void setHI2C(I2C_HandleTypeDef* hi2c1){
 	hi2c = hi2c1;
+	memset(pressureValues, 0,12);
+	//start = time(NULL);
 }
 
 static void http_server_serve(struct netconn *conn) 
@@ -311,41 +322,57 @@ void DynWebPage(struct netconn *conn)
 
   //HAL_Delay(1000);
 
-  	  	  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x28, 1, &rawPressureData[0], 1, 50);
-  	  	  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x29, 1, &rawPressureData[1], 1, 50);
-  	  	  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x2A, 1, &rawPressureData[2], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x28, 1, &rawPressureData[0], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x29, 1, &rawPressureData[1], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x2A, 1, &rawPressureData[2], 1, 50);
 
-  	  	  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x2B, 1, &rawTemperatureData[0], 1, 50);
-  	  	  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x2C, 1, &rawTemperatureData[1], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x2B, 1, &rawTemperatureData[0], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, PRESSURE_SENSOR_ADDR, 0x2C, 1, &rawTemperatureData[1], 1, 50);
 
-  	  	  pressureData = rawPressureData[0];
-  	  	  pressureData |= (rawPressureData[1] << 8);
-  	  	  if(rawPressureData[2] & 0x80){
-  	  		  pressureData |= (rawPressureData[2] << 16);
-  	  		  pressureData |= (0xFF << 24);
-  	  	  }else{
-  	  		  pressureData |= (rawPressureData[2] << 16);
-  	  	  }
-  	  	  pressure = pressureData/4096.0;
+  pressureData = rawPressureData[0];
+  pressureData |= (rawPressureData[1] << 8);
+  if(rawPressureData[2] & 0x80){
+	  pressureData |= (rawPressureData[2] << 16);
+  	  pressureData |= (0xFF << 24);
+  }else{
+  	  pressureData |= (rawPressureData[2] << 16);
+  }
+  pressure = pressureData/4096.0;
 
-  	  	  temperatureData = rawTemperatureData[0] + (rawTemperatureData[1] << 8);
-  	  	  temperature = 42.5 + temperatureData/480.0;
+  //end = time(NULL);
+  if(tcnt > 150){
+	  start = time(NULL);
+	  for(uint8_t i = 0; i < 11; i++){
+		  pressureValues[11 - i] = pressureValues[10 - i];
+	  }
+	  pressureValues[0] = pressure;
+	  pente = 0;
+	  for(k = 0; (k < 11) && (pressureValues[k + 1] != 0); k++){
+		  pente += (pressureValues[k + 1] - pressureValues[k]);
+	  }
+	  pente /= k;
+	  tcnt = 0;
+  }
+  tcnt++;
+
+  temperatureData = rawTemperatureData[0] + (rawTemperatureData[1] << 8);
+  temperature = 42.5 + temperatureData/480.0;
 
 
-  	  	  HAL_I2C_Mem_Read(hi2c, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x2A, 1, &rawTemperatureData2[0], 1, 50);
-  	  	  HAL_I2C_Mem_Read(hi2c, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x2B, 1, &rawTemperatureData2[1], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x2A, 1, &rawTemperatureData2[0], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x2B, 1, &rawTemperatureData2[1], 1, 50);
 
-  	  	  temperatureData2 = rawTemperatureData2[0] + (rawTemperatureData2[1] << 8);
-  	  	  RealTdeg0 = (((uint16_t)Tdeg[0] + (((uint16_t)t0t1MSB & 0b11) << 8)))/8.0;
-  	  	  RealTdeg1 = (((uint16_t)Tdeg[1] + (((uint16_t)t0t1MSB & 0b1100) << 6)))/8.0;
-  	  	  temperature2 = lerp(RealTdeg0, RealTdeg1, (float)(temperatureData2 - T0)/(T1-T0));
+  temperatureData2 = rawTemperatureData2[0] + (rawTemperatureData2[1] << 8);
+  RealTdeg0 = (((uint16_t)Tdeg[0] + (((uint16_t)t0t1MSB & 0b11) << 8)))/8.0;
+  RealTdeg1 = (((uint16_t)Tdeg[1] + (((uint16_t)t0t1MSB & 0b1100) << 6)))/8.0;
+  temperature2 = lerp(RealTdeg0, RealTdeg1, (float)(temperatureData2 - T0)/(T1-T0));
 
-  	  	  HAL_I2C_Mem_Read(hi2c, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x28, 1, &rawHumidityData[0], 1, 50);
-  	  	  HAL_I2C_Mem_Read(hi2c, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x29, 1, &rawHumidityData[1], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x28, 1, &rawHumidityData[0], 1, 50);
+  HAL_I2C_Mem_Read(hi2c, HUMIDITY_TEMPERATURE_SENSOR_ADDR, 0x29, 1, &rawHumidityData[1], 1, 50);
 
-  	  	  humidityData = rawHumidityData[0] + (rawHumidityData[1] << 8);
-  	  	  Halpha = (float)(humidityData - H0)/(H1-H0);
-  	  	  humidity = lerp(Hdeg[0]/2.0, Hdeg[1]/2.0, Halpha);
+  humidityData = rawHumidityData[0] + (rawHumidityData[1] << 8);
+  Halpha = (float)(humidityData - H0)/(H1-H0);
+  humidity = lerp(Hdeg[0]/2.0, Hdeg[1]/2.0, Halpha);
 
 
   float t1 = 0.5;
@@ -356,21 +383,28 @@ void DynWebPage(struct netconn *conn)
   strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center; font-size:30px;\"> Temperature : ");
   strcat((char *)PAGE_BODY, valeur);
   strcat((char *)PAGE_BODY, "</div>");
-  sprintf(valeur, "%.1f %s", pressure, "Pa");
+  sprintf(valeur, "%.1f %s", pressure, "hPa");
   strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center; font-size:30px;\"> Pression : ");
   strcat((char *)PAGE_BODY, valeur);
   strcat((char *)PAGE_BODY, "</div>");
   sprintf(valeur, "%.1f %s", humidity, "%");
-  strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 33%; text-align: center; font-size:30px;\"> Humidite : ");
+  strcat((char *)PAGE_BODY, "<div style=\"position: relative; top:0px; float: left; width: 32%; text-align: center; font-size:30px;\"> Humidite : ");
   strcat((char *)PAGE_BODY, valeur);
   strcat((char *)PAGE_BODY, "</div>");
   strcat((char *)PAGE_BODY, "</div>");
 
-  strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px\">Prevision :");
-  strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px; width 50%; float: left;position: relative;\">Il fait ");
+  strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px\"><div>Prevision :</div>");
+  strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px; width 50%; position: relative;\"> Condition : ");
+  if(pressure > 955){
+	  strcat((char *)PAGE_BODY, "anticyclone");
+  } else {
+	  strcat((char *)PAGE_BODY, "depression");
+  }
+  //strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px\"><div>Pente de pression :");
+  //sprintf(valeur, "%.1f %s", (pente * 12), "deg C");
+  //strcat((char *)PAGE_BODY, valeur);
+  //strcat((char *)PAGE_BODY, "</div>");
   strcat((char *)PAGE_BODY, "</div>");
-  strcat((char *)PAGE_BODY, "<div style=\"padding-top: 150px; text-align: center; font-size: 40px; width 50%; float: left;position: relative;\">Il va faire ");
-    strcat((char *)PAGE_BODY, "</div>");
   strcat((char *)PAGE_BODY, "</div>");
 
   strcat((char *)PAGE_BODY, "</body></html>");
